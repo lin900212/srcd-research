@@ -56,8 +56,10 @@ main{padding:14px 0 44px}
 .status{flex:none;color:var(--status);font-size:13px;font-weight:800;text-align:right}
 .evidence-card p{margin:4px 0 9px;color:#d8d8d8;font-size:14px;line-height:1.5}
 .citations{border-top:1px solid #444;padding-top:5px}
-.citation{display:block;margin:7px 0;color:var(--link);font-size:14px;line-height:1.4}
-.citation small{display:block;margin-top:2px;color:#999;font-size:12px}
+.citation{display:block;margin:8px 0 10px;color:var(--link);font-size:14px;line-height:1.45}
+.citation-lead{display:block;font-weight:700}
+.citation-details{display:block;margin-top:2px;color:#d1d1d1;font-size:13px;overflow-wrap:anywhere}
+.citation-details em{color:#a5a5a5}
 .citation-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:3px}
 .citation-actions a{font-size:13px}
 .evidence-note{color:#999!important;font-size:13px!important}
@@ -82,12 +84,14 @@ main{padding:14px 0 44px}
 .record-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .record-id{color:#aaa;font-size:12px;font-weight:700}
 .record-group{color:#999;font-size:12px;text-align:right}
-.record h4{margin:4px 0 6px;font-size:16px;line-height:1.38;overflow-wrap:anywhere}
+.record-reference{margin:5px 0 7px;line-height:1.42}
+.record-reference>a{font-size:14px;font-weight:750}
+.record-title{margin:2px 0;color:#e0e0e0;font-size:14px;overflow-wrap:anywhere}
+.record-title em{color:#a5a5a5}
+.record-entry{margin-top:3px}
+.record-entry a{font-size:13px;font-weight:650}
 .record .authors{margin:0;color:#c6c6c6;font-size:13px}
 .record .finding{margin:7px 0;color:#ddd;font-size:13px;line-height:1.48;white-space:pre-line}
-.record-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.record-links a{font-size:13px;font-weight:650}
-.record-links .summary-link{color:#8dccff}
 footer{margin-top:21px;padding-top:13px;border-top:1px solid #3f3f3f;color:#929292;font-size:13px}
 footer p{margin:5px 0}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -133,7 +137,7 @@ footer p{margin:5px 0}
   </section>
 
   <section aria-labelledby="evidence-heading">
-    <div class="section-heading"><h2 id="evidence-heading">目前文獻支持、混合與反向的關係</h2><p>各欄對應一項核心研究。點選文獻可直接開啟雲端「三研究導覽」的繁中摘要儲存格；DOI／文章入口另列。</p></div>
+  <div class="section-heading"><h2 id="evidence-heading">目前文獻支持、混合與反向的關係</h2><p>各欄對應一項核心研究。第一行以 APA 作者年分連到雲端繁中摘要，第二行列篇名與期刊／書名，第三行提供 DOI／文章入口。</p></div>
     <div class="evidence-grid">
       <section class="study-column" aria-labelledby="study1-evidence">
         <h3 id="study1-evidence"><small>研究一｜表現型與 EF</small>閱讀理解與執行功能的關係</h3>
@@ -208,7 +212,8 @@ footer p{margin:5px 0}
       const item = citationFor(row);
       if (!item) return '';
       const doi = item.doi ? `<a href="${safe(item.doi)}" target="_blank" rel="noopener noreferrer">DOI／文章入口 ↗</a>` : '';
-      return `<span class="citation"><a href="${safe(item.summaryUrl)}" target="_blank" rel="noopener noreferrer">${safe(item.shortCitation)}｜繁中摘要 ↗</a><small>${safe(item.title)}</small><span class="citation-actions">${doi}</span></span>`;
+      const publication = item.publication ? ` <span aria-hidden="true">·</span> <em>${safe(item.publication)}</em>` : '';
+      return `<span class="citation"><a class="citation-lead" href="${safe(item.summaryUrl)}" target="_blank" rel="noopener noreferrer">${safe(item.apaCitation)}｜繁中摘要 ↗</a><span class="citation-details">${safe(item.title)}${publication}</span><span class="citation-actions">${doi}</span></span>`;
     }).join('');
   });
   function render() {
@@ -222,10 +227,13 @@ footer p{margin:5px 0}
     list.innerHTML = filtered.map(item => `
       <article class="record">
         <div class="record-top"><span class="record-id">${safe(item.id)}｜${safe(item.indexScope)}</span><span class="record-group">研究${safe(item.study)} · D${safe(item.row)}</span></div>
-        <h4>${safe(item.title)}</h4>
+        <div class="record-reference">
+          <a href="${safe(item.summaryUrl)}" target="_blank" rel="noopener noreferrer">${safe(item.apaCitation)}｜繁中摘要 ↗</a>
+          <p class="record-title">${safe(item.title)}${item.publication ? ` <span aria-hidden="true">·</span> <em>${safe(item.publication)}</em>` : ''}</p>
+          ${item.doi ? `<div class="record-entry"><a href="${safe(item.doi)}" target="_blank" rel="noopener noreferrer">DOI／文章入口 ↗</a></div>` : ''}
+        </div>
         <p class="authors">${safe(item.authors)}</p>
         <p class="finding"><strong>${safe(statusText[item.status] || item.status)}｜</strong>${safe(item.finding)}</p>
-        <div class="record-links"><a class="summary-link" href="${safe(item.summaryUrl)}" target="_blank" rel="noopener noreferrer">繁中摘要 ↗</a>${item.doi ? `<a href="${safe(item.doi)}" target="_blank" rel="noopener noreferrer">DOI／文章入口 ↗</a>` : ''}</div>
       </article>`).join('');
     count.textContent = `顯示 ${filtered.length} / ${records.length} 筆關係紀錄`;
   }
