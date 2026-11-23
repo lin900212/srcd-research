@@ -7,7 +7,7 @@
 <meta name="description" content="閱讀理解困難與執行功能博士系列研究：研究序列、支持與反向證據，以及直接連結至雲端繁中摘要。">
 <title>閱讀理解 × 執行功能｜研究序列與文獻證據</title>
 <style>
-:root{color-scheme:dark;--page:#181818;--surface:#242424;--surface2:#202020;--ink:#f4f4f4;--muted:#aaa;--line:#414141;--green:#00c853;--blue:#168fff;--red:#ff5d64;--gray:#9aa2aa;--white:#fff;--link:#3ba7ff}
+:root{color-scheme:dark;--page:#181818;--surface:#242424;--surface2:#202020;--ink:#f4f4f4;--muted:#c0c0c0;--line:#414141;--green:#00c853;--blue:#168fff;--red:#ff5d64;--gray:#aab2b8;--orange:#f0a14a;--white:#fff;--link:#48adff}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--page);color:var(--ink);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif}
@@ -22,7 +22,7 @@ header{padding:28px 0 10px}
 .eyebrow,.section-kicker{margin:0;color:var(--muted);font-size:14px;font-weight:700;letter-spacing:.03em}
 h1{margin:5px 0 8px;font-size:clamp(30px,3.3vw,46px);line-height:1.2;letter-spacing:-.025em}
 .subtitle{max-width:1080px;margin:0;color:#d0d0d0;font-size:clamp(17px,1.8vw,22px);font-weight:700}
-.intro{max-width:1120px;margin:9px 0 0;color:#aaa;font-size:16px}
+.intro{max-width:1120px;margin:9px 0 0;color:#c0c0c0;font-size:16px}
 .primary-link{flex:none;display:inline-block;border:1px solid #abb5bc;border-radius:9px;padding:10px 14px;color:#f8f8f8;text-decoration:none;font-weight:700}
 .primary-link:hover{background:#30383b;color:#fff}
 main{padding:14px 0 44px}
@@ -30,7 +30,7 @@ main{padding:14px 0 44px}
 .legend-items{display:flex;align-items:center;gap:12px 25px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:8px;color:#e7e7e7;font-size:14px}
 .legend-box{width:22px;height:19px;border:2px solid currentColor;border-radius:6px;flex:none}
-.core-key{color:#f4f4f4}.supported-key{color:var(--green)}.partial-key{color:var(--blue)}.open-key{color:var(--red)}.negative-key{color:var(--gray)}
+.core-key{color:#f4f4f4}.supported-key{color:var(--green)}.partial-key{color:var(--blue)}.open-key{color:var(--red)}.negative-key{color:var(--gray)}.direction-key{color:var(--orange)}
 .legend-note{color:#888;font-size:13px}
 .roadmap{display:grid;grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr) 38px minmax(0,1fr);gap:8px;align-items:stretch}
 .roadmap-card{min-width:0;min-height:188px;padding:19px 21px;border:3px solid var(--white);border-radius:15px;background:var(--surface);display:flex;flex-direction:column;justify-content:center;gap:7px}
@@ -51,6 +51,8 @@ main{padding:14px 0 44px}
 .evidence-card.partial{--status:var(--blue)}
 .evidence-card.open{--status:var(--red)}
 .evidence-card.not-supported{--status:var(--gray)}
+.evidence-card[data-evidence-key]{cursor:pointer;transition:background-color .15s ease,transform .15s ease}
+.evidence-card[data-evidence-key]:hover{background:#2b2b2b;transform:translateY(-1px)}
 .evidence-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .evidence-title h4{margin:0 0 7px;font-size:17px;line-height:1.4}
 .status{flex:none;color:var(--status);font-size:13px;font-weight:800;text-align:right}
@@ -63,12 +65,51 @@ main{padding:14px 0 44px}
 .citation-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:3px}
 .citation-actions a{font-size:13px}
 .evidence-note{color:#999!important;font-size:13px!important}
-.gap-zone{margin-top:20px;padding:17px 19px 19px;border:2px dashed var(--red);border-radius:15px;background:#2b2223}
-.gap-zone h3{margin:0 0 5px;font-size:20px}
-.gap-zone>p{margin:0 0 13px;color:#c8c8c8;font-size:14px}
-.gap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
-.gap-grid .evidence-card{height:100%;margin:0;padding:12px;background:#322728}
+.evidence-open{display:inline-flex;align-items:center;gap:7px;margin-top:7px;border:1px solid #777;border-radius:7px;background:#191919;color:#f2f2f2;padding:6px 9px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.evidence-open:hover{background:#343434}
+.direction-panel{margin:12px 0 18px;border:2px solid var(--orange);border-radius:12px;background:#2b251e}
+.direction-panel>summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;padding:11px 13px;font-weight:800;color:#ffe1bd}
+.direction-panel>summary small{color:#f2bd7f;font-size:12px;text-align:right}
+.direction-content{padding:0 13px 13px}
+.direction-item{padding:9px 0;border-top:1px solid #5b4935}
+.direction-item:first-child{border-top:0}
+.direction-head{display:flex;gap:8px;align-items:flex-start}
+.hypothesis-number{flex:none;color:#ffcf94;font-weight:850;min-width:31px}
+.direction-kind{flex:none;border:1px solid #c98237;border-radius:999px;padding:1px 7px;color:#ffd09b;font-size:11px;font-weight:750}
+.direction-item p{margin:5px 0 7px;color:#e9e0d5;font-size:13px;line-height:1.5}
+.direction-citations{display:flex;flex-wrap:wrap;gap:5px 10px}
+.direction-citations a{color:#ffc27d;font-size:12px;font-weight:700;text-underline-offset:2px}
+.direction-citations .doi-mini{color:#c8c8c8;font-weight:500}
+.direction-note{margin:9px 0 0;color:#d6c4af;font-size:12px;line-height:1.5}
+.gap-zone{margin-top:29px;padding:0}
+.gap-zone h3{margin:0 0 5px;font-size:21px}
+.gap-zone>p{margin:0 0 15px;color:#c8c8c8;font-size:14px}
+.gap-grid{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr);gap:8px;align-items:stretch}
+.gap-grid .evidence-card{height:100%;margin:0;padding:14px;background:#302526}
 .gap-grid .evidence-card p{font-size:13px}
+.gap-arrow{align-self:center;justify-self:center;color:#ff858a;font-size:25px;font-weight:850}
+.convergence{display:block;width:100%;height:66px;margin:0 auto;color:var(--red)}
+.convergence path{fill:none;stroke:var(--red);stroke-width:3}
+.final-question{border:3px solid var(--red);border-radius:14px;padding:17px 20px;background:#302526;text-align:center}
+.final-question h4{margin:0 0 5px;color:#ffdfe0;font-size:19px}
+.final-question p{max-width:1100px;margin:0 auto;color:#f2dfe0;font-size:15px}
+dialog{width:min(860px,calc(100% - 28px));max-height:min(82vh,880px);padding:0;border:1px solid #737373;border-radius:14px;background:#202020;color:var(--ink);box-shadow:0 22px 80px #000b}
+dialog::backdrop{background:#000b}
+.dialog-head{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:17px 20px;background:#202020;border-bottom:1px solid #454545}
+.dialog-head h2{margin:0;font-size:21px;line-height:1.35}
+.dialog-close{flex:none;border:1px solid #777;border-radius:7px;background:#181818;color:#fff;padding:6px 10px;font:inherit;cursor:pointer}
+.dialog-lede{margin:0;padding:11px 20px;color:#c9c9c9;font-size:13px}
+.dialog-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 20px 20px}
+.dialog-group{min-width:0;border:1px solid #444;border-radius:10px;background:#262626;padding:12px}
+.dialog-group.pending{grid-column:1/-1}
+.dialog-group h3{margin:0 0 7px;font-size:16px}
+.dialog-group.support h3{color:var(--green)}.dialog-group.counter h3{color:var(--gray)}.dialog-group.pending h3{color:var(--orange)}
+.dialog-group>p{margin:0 0 8px;color:#c9c9c9;font-size:13px}
+.detail-record{padding:9px 0;border-top:1px solid #444}
+.detail-record p{margin:0;color:#ededed;font-size:13px;line-height:1.5}
+.detail-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px;font-size:12px}
+.detail-links a:first-child{font-weight:750}
+.no-evidence{color:#aaa!important;font-style:italic}
 .directory{margin-top:28px;border:1px solid #464646;border-radius:12px;background:var(--surface2)}
 .directory>summary{padding:14px 17px;cursor:pointer;font-size:18px;font-weight:750}
 .directory-content{padding:0 17px 18px}
@@ -95,8 +136,8 @@ main{padding:14px 0 44px}
 footer{margin-top:21px;padding-top:13px;border-top:1px solid #3f3f3f;color:#929292;font-size:13px}
 footer p{margin:5px 0}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:900px){.roadmap-card{min-height:205px;padding:15px}.evidence-grid{gap:12px}.evidence-card{padding:12px}.status{font-size:12px}.gap-grid{grid-template-columns:1fr}.list{grid-template-columns:1fr}}
-@media(max-width:680px){.wrap{width:min(100% - 32px,560px)}header{padding-top:22px}.head-row{align-items:flex-start;flex-direction:column;gap:15px}.primary-link{align-self:flex-start}.legend{padding:9px 0 16px}.legend-items{gap:10px 16px}.roadmap{grid-template-columns:minmax(0,1fr);gap:5px}.roadmap-card{min-height:0;padding:15px 16px}.roadmap-arrow{transform:rotate(90deg);font-size:24px;padding:3px}.section-heading{margin-top:22px}.evidence-grid{grid-template-columns:minmax(0,1fr);gap:11px}.study-column h3{margin-top:3px}.gap-zone{padding:14px}.controls{align-items:stretch}.controls label{width:100%}.controls input,.controls select{width:100%}.count{width:100%;margin-left:0}}
+@media(max-width:1000px){.evidence-grid{grid-template-columns:1fr}.study-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}.study-column h3{grid-column:1/-1;margin:6px 0 0}.study-column .evidence-card,.study-column .direction-panel{margin:0}.study-column .direction-panel{grid-column:1/-1}.gap-grid{grid-template-columns:minmax(0,1fr) 25px minmax(0,1fr) 25px minmax(0,1fr)}}
+@media(max-width:700px){.wrap{width:min(100% - 32px,560px)}header{padding-top:22px}.head-row{align-items:flex-start;flex-direction:column;gap:15px}.primary-link{align-self:flex-start}.legend{padding:9px 0 16px}.legend-items{gap:10px 16px}.roadmap{grid-template-columns:minmax(0,1fr);gap:5px}.roadmap-card{min-height:0;padding:15px 16px}.roadmap-arrow{transform:rotate(90deg);font-size:24px;padding:3px}.section-heading{margin-top:22px}.study-column{display:block}.study-column h3{margin:3px 0 9px}.study-column .evidence-card,.study-column .direction-panel{margin:10px 0}.gap-grid{grid-template-columns:minmax(0,1fr);gap:7px}.gap-arrow{transform:rotate(90deg);font-size:22px;padding:1px}.convergence{display:none}.final-question{padding:15px}.dialog-groups{grid-template-columns:1fr;padding:0 14px 15px}.dialog-group.pending{grid-column:auto}.dialog-head{padding:14px}.dialog-lede{padding:10px 14px}.controls{align-items:stretch}.controls label{width:100%}.controls input,.controls select{width:100%}.count{width:100%;margin-left:0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -105,10 +146,10 @@ footer p{margin:5px 0}
 <header>
   <div class="wrap head-row">
     <div>
-      <p class="eyebrow">博士系列研究｜截至 2026-11-22 的專案文獻紀錄</p>
+      <p class="eyebrow">博士系列研究｜文獻查詢截止 2026-11-22；導覽更新 2026-11-24</p>
       <h1>閱讀理解 × 執行功能：研究序列與文獻證據網絡</h1>
       <p class="subtitle">先辨識閱讀理解困難中的執行功能歷程，再確認遊戲操弄，最後檢驗新篇章遷移與中介。</p>
-      <p class="intro">三項研究由左至右接續。證據框顏色表示目前文獻對特定關係的支持狀態，不代表單篇研究品質，也不把相關結果當成介入因果。</p>
+      <p class="intro">三項研究由左至右接續。證據框顏色表示目前文獻對特定關係的支持狀態，不代表單篇研究品質，也不把相關結果當成介入因果。點選證據卡可查看支持、反向或混合結果，以及待直接檢驗的關係。</p>
     </div>
     <a class="primary-link" href="https://docs.google.com/spreadsheets/d/1BwHrlJhnYIRecen6l0tnWpZPVhIc7X_zW_3rRHFekZo/edit#gid=738173269&range=A1" target="_blank" rel="noopener noreferrer">開啟雲端文獻總表 ↗</a>
   </div>
@@ -121,6 +162,7 @@ footer p{margin:5px 0}
       <span class="legend-item"><i class="legend-box partial-key" aria-hidden="true"></i>藍框｜部分、條件或混合支持</span>
       <span class="legend-item"><i class="legend-box open-key" aria-hidden="true"></i>紅框｜待直接驗證</span>
       <span class="legend-item"><i class="legend-box negative-key" aria-hidden="true"></i>灰框｜已檢驗但未獲支持</span>
+      <span class="legend-item"><i class="legend-box direction-key" aria-hidden="true"></i>橘框｜文獻回顧與研究方向</span>
     </div>
     <span class="legend-note">灰框呈現特定結果未獲支持，不等同證明效果為零。</span>
   </section>
@@ -137,38 +179,50 @@ footer p{margin:5px 0}
   </section>
 
   <section aria-labelledby="evidence-heading">
-  <div class="section-heading"><h2 id="evidence-heading">目前文獻支持、混合與反向的關係</h2><p>各欄對應一項核心研究。第一行以 APA 作者年分連到雲端繁中摘要，第二行列篇名與期刊／書名，第三行提供 DOI／文章入口。</p></div>
+  <div class="section-heading"><h2 id="evidence-heading">目前文獻支持、混合與反向的關係</h2><p>各欄對應一項核心研究。點選卡片可查看該關係的細節；文獻入口依序提供 APA 作者年分摘要、篇名與期刊／書名、DOI／文章入口。</p></div>
     <div class="evidence-grid">
       <section class="study-column" aria-labelledby="study1-evidence">
         <h3 id="study1-evidence"><small>研究一｜表現型與 EF</small>閱讀理解與執行功能的關係</h3>
-        <article class="evidence-card supported"><div class="evidence-title"><h4>多項研究支持｜EF 與閱讀表現相關</h4><span class="status">多研究支持</span></div><p>兒童 EF 歷程與閱讀多面向有關聯；廣義關聯不能單獨判斷閱讀情境 EF 是否優於通用 EF，也不能推論訓練會造成理解提升。</p><div class="citations" data-ref-rows="7,12"></div></article>
-        <article class="evidence-card partial"><div class="evidence-title"><h4>部分支持｜閱讀情境 EF 的增額解釋受條件影響</h4><span class="status">部分／條件</span></div><p>部分直接配對研究指出，閱讀情境的彈性或語文 EF 可能提供額外資訊；效果會隨年級、文本、作業與族群改變，仍需在同一樣本直接比較。</p><div class="citations" data-ref-rows="8,9,10,13,17"></div></article>
-        <article class="evidence-card not-supported"><div class="evidence-title"><h4>已檢驗但未獲支持｜部分 S-RCD 樣本未見整體 EF 弱勢</h4><span class="status">未獲支持</span></div><p>有研究在特定閱讀理解困難樣本中未觀察到整體 EF 相對弱勢；另有研究發現抑制的獨特解釋量很小。這提示應區分閱讀表現型與 EF 歷程，不能預設所有學生都有同一缺損。</p><div class="citations" data-ref-rows="14,15"></div></article>
+        <article class="evidence-card supported" data-evidence-key="s1-general"><div class="evidence-title"><h4>多項研究支持｜EF 與閱讀表現相關</h4><span class="status">多研究支持</span></div><p>兒童 EF 歷程與閱讀多面向有關聯；廣義關聯不能單獨判斷閱讀情境 EF 是否優於通用 EF，也不能推論訓練會造成理解提升。</p><div class="citations" data-ref-rows="7,12"></div></article>
+        <article class="evidence-card partial" data-evidence-key="s1-context"><div class="evidence-title"><h4>部分支持｜閱讀情境 EF 的增額解釋受條件影響</h4><span class="status">部分／條件</span></div><p>部分直接配對研究指出，閱讀情境的彈性或語文 EF 可能提供額外資訊；效果會隨年級、文本、作業與族群改變，仍需在同一樣本直接比較。</p><div class="citations" data-ref-rows="8,9,10,12,13"></div></article>
+        <article class="evidence-card not-supported" data-evidence-key="s1-phenotype"><div class="evidence-title"><h4>已檢驗但未獲支持｜並非所有理解弱勢都呈現整體 EF 弱勢</h4><span class="status">反向／異質</span></div><p>部分 S-RCD 樣本未觀察到整體 EF 相對弱勢；也有研究發現抑制的獨特解釋量很小。閱讀表現型與 EF 歷程需要分開檢驗。</p><div class="citations" data-ref-rows="10,14,15,16"></div></article>
+        <details class="direction-panel"><summary><span>文獻回顧與研究方向</span><small>研究假設候選 · 待補查問題</small></summary><div class="direction-content" data-direction-study="1"></div></details>
       </section>
       <section class="study-column" aria-labelledby="study2-evidence">
         <h3 id="study2-evidence"><small>研究二｜遊戲原型與操弄</small>遊戲和 EF 練習的證據</h3>
-        <article class="evidence-card partial"><div class="evidence-title"><h4>部分支持｜遊戲與閱讀情境 EF 活動已有先例</h4><span class="status">部分支持</span></div><p>一般兒童遊戲式 EF 訓練、閱讀情境 EF 活動及商業遊戲皆有研究先例；但遊戲內的熟練、獨立 EF 作業改變與閱讀遷移是不同結果。</p><div class="citations" data-ref-rows="21,22,23,26"></div></article>
-        <article class="evidence-card not-supported"><div class="evidence-title"><h4>已檢驗但未獲支持｜遊戲化未顯示一致的認知訓練增益</h4><span class="status">未獲支持</span></div><p>一項電腦化認知訓練統合回顧發現遊戲化對動機有幫助，但未確認認知訓練成效提升。研究二因此需要驗證目標 EF 歷程是否真的被遊戲規則動員。</p><div class="citations" data-ref-rows="24"></div></article>
-        <article class="evidence-card open"><div class="evidence-title"><h4>待直接驗證｜目標 EF 歷程是否由遊戲機制引發</h4><span class="status">尚待檢驗</span></div><p>目前原稿中的商業遊戲需要先做機制分析。研究原型要把遊戲規則、目標 EF 與獨立操弄檢核對齊，避免把遊戲分數當成 EF 改善。</p><p class="evidence-note">本關係是博士研究設計問題，不是目前文獻已證實的結果。</p></article>
+        <article class="evidence-card partial" data-evidence-key="s2-precedent"><div class="evidence-title"><h4>部分支持｜遊戲與 EF 閱讀活動已有介入先例</h4><span class="status">部分支持</span></div><p>遊戲式 EF 訓練、閱讀情境活動及商業遊戲都有先例；遊戲熟練、獨立 EF 改變和閱讀遷移仍是不同結果。</p><div class="citations" data-ref-rows="21,22,23,26"></div></article>
+        <article class="evidence-card not-supported" data-evidence-key="s2-gamification"><div class="evidence-title"><h4>已檢驗但未獲支持｜遊戲化未顯示一致的認知訓練增益</h4><span class="status">未獲支持</span></div><p>統合回顧發現遊戲化可能提高動機，但未確認認知訓練成效提升。這支持在原型研究中分開測量投入、遊戲內表現與獨立 EF 作業。</p><div class="citations" data-ref-rows="21,24,25"></div></article>
+        <details class="direction-panel"><summary><span>文獻回顧與研究方向</span><small>操弄假設候選 · 待補查問題</small></summary><div class="direction-content" data-direction-study="2"></div></details>
       </section>
       <section class="study-column" aria-labelledby="study3-evidence">
         <h3 id="study3-evidence"><small>研究三｜介入、遷移與中介</small>介入後的閱讀結果</h3>
-        <article class="evidence-card partial"><div class="evidence-title"><h4>部分支持｜介入研究曾改善部分閱讀結果</h4><span class="status">部分／條件</span></div><p>商業遊戲、EF 介入及 EF＋閱讀活動有閱讀結果改善的先例；介入成分、族群、對照與結果指標不一，尚不能直接推論到 S-RCD 遊戲式 EF 介入。</p><div class="citations" data-ref-rows="22,23,28,32,33,34,36"></div></article>
-        <article class="evidence-card not-supported"><div class="evidence-title"><h4>已檢驗但未獲支持｜部分獨立篇章理解結果未達顯著</h4><span class="status">未獲支持</span></div><p>閱讀情境 EF 電腦活動研究觀察到近遷移或相關歷程變化，但獨立標準化篇章理解的組間改善未達統計顯著。這是該測量與樣本中的未顯著結果，不等同證明效果為零。</p><div class="citations" data-ref-rows="25,31"></div></article>
-        <article class="evidence-card partial"><div class="evidence-title"><h4>中介證據需按組間對比解讀</h4><span class="status">設計待定</span></div><p>相同介入可以同時測量通用 EF、閱讀情境 EF 與新篇章理解；但中介效果要對應主要組間差異。主要對照及中介優先順序留待全文回顧與精度規劃後決定。</p><div class="citations" data-ref-rows="17,22,28,30,36"></div></article>
+        <article class="evidence-card partial" data-evidence-key="s3-reading"><div class="evidence-title"><h4>部分支持｜介入曾改善部分閱讀結果</h4><span class="status">部分／條件</span></div><p>商業遊戲、EF 介入及 EF＋閱讀活動都有先例；介入成分、族群、對照、結果指標及遷移測量不一。</p><div class="citations" data-ref-rows="22,23,28,32,33,34,35,36"></div></article>
+        <article class="evidence-card not-supported" data-evidence-key="s3-transfer"><div class="evidence-title"><h4>已檢驗但未獲支持｜獨立篇章理解結果未達顯著</h4><span class="status">未獲支持</span></div><p>Ruffini 等人的閱讀情境 EF 電腦活動研究觀察到近遷移或相關歷程變化，但獨立標準化篇章理解未見顯著組間改善。此結果不等同證明效果為零。</p><div class="citations" data-ref-rows="31,37"></div></article>
+        <article class="evidence-card partial" data-evidence-key="s3-mediation"><div class="evidence-title"><h4>中介證據需對應指定組間差異</h4><span class="status">設計待定</span></div><p>同一試驗可先測獨立 EF、後測新篇章理解，再估計間接效果。主要對照與中介問題尚待文獻與精度規劃決定。</p><div class="citations" data-ref-rows="17,22,28,29,35,36"></div></article>
+        <details class="direction-panel"><summary><span>文獻回顧與研究方向</span><small>遷移與中介假設候選 · 比較未定</small></summary><div class="direction-content" data-direction-study="3"></div></details>
       </section>
     </div>
   </section>
 
   <section class="gap-zone" aria-labelledby="gap-title">
-    <h3 id="gap-title">目前要直接推進的研究缺口</h3>
-    <p>目前專案已檢視的代表文獻中，尚未識別出在 S-RCD 學生完整驗證「遊戲式 EF 介入 → 獨立 EF 改變 → 未練習新篇章理解」並估計時序間接效果的研究。這是暫定缺口，待完整篩選與全文核對。</p>
+    <h3 id="gap-title">三項接續研究要突破的研究缺口</h3>
+    <p>目前專案已檢視的代表文獻中，尚未識別出在 S-RCD 學生完整驗證「遊戲式 EF 介入 → 獨立 EF 改變 → 未練習新篇章理解」並估計時序間接效果的研究。此為暫定缺口，仍待完整篩選與全文核對。</p>
     <div class="gap-grid">
-      <article class="evidence-card open"><div class="evidence-title"><h4>遊戲機制 → 獨立 EF</h4><span class="status">待驗證</span></div><p>確認遊戲練習是否改善未練習的 EF 作業，而非只提高遊戲分數。</p></article>
-      <article class="evidence-card open"><div class="evidence-title"><h4>獨立 EF → 新篇章理解</h4><span class="status">待驗證</span></div><p>評量未練習文本，並讓 EF 改變先於主要理解結果測量。</p></article>
-      <article class="evidence-card open"><div class="evidence-title"><h4>中介效果 → 指定組間差異</h4><span class="status">待驗證</span></div><p>待定主要對照後，估計對應的間接效果；不同對照回答不同因果問題。</p></article>
+      <article class="evidence-card open"><div class="evidence-title"><h4>研究一｜辨識閱讀表現型與 EF 歷程</h4><span class="status">缺口一</span></div><p>釐清哪些學生有篇章理解困難，哪些 EF 歷程在通用能力與語文因素之外提供解釋。</p></article>
+      <span class="gap-arrow" aria-hidden="true">→</span>
+      <article class="evidence-card open"><div class="evidence-title"><h4>研究二｜確認遊戲操弄目標 EF</h4><span class="status">缺口二</span></div><p>證明遊戲規則動員指定歷程，並確認學生能完成有效練習與獨立操弄檢核。</p></article>
+      <span class="gap-arrow" aria-hidden="true">→</span>
+      <article class="evidence-card open"><div class="evidence-title"><h4>研究三｜檢驗遷移與時序中介</h4><span class="status">缺口三</span></div><p>測量未練習 EF 與新篇章理解，估計對應主要組間差異的間接效果。</p></article>
     </div>
+    <svg class="convergence" viewBox="0 0 1000 70" role="img" aria-label="三項研究匯聚至博士論文核心問題"><defs><marker id="gap-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="currentColor"/></marker></defs><path d="M165 0 V35 M500 0 V35 M835 0 V35 M165 35 H835 M500 35 V65" marker-end="url(#gap-arrowhead)"/></svg>
+    <div class="final-question"><h4>博士系列研究的最終問題</h4><p>對特定閱讀理解困難學生，遊戲式執行功能介入能否改善未練習的執行功能與新篇章理解？較早出現的 EF 改變，能否解釋事先指定組間比較的間接效果？</p></div>
   </section>
+
+  <dialog id="evidence-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-head"><h2 id="dialog-title"></h2><button class="dialog-close" type="button">關閉</button></div>
+    <p class="dialog-lede">每項結果只代表該研究實際測量的族群、作業、對照與時間點。未達顯著不代表效果為零；未測量的中介不列作反向證據。</p>
+    <div class="dialog-groups" id="dialog-groups"></div>
+  </dialog>
 
   <details class="directory" id="literature-directory">
     <summary>展開三研究文獻目錄與繁中摘要連結</summary>
@@ -202,10 +256,75 @@ footer p{margin:5px 0}
   const study = document.getElementById('filter-study');
   const evidence = document.getElementById('filter-evidence');
   const count = document.getElementById('result-count');
+  const dialog = document.getElementById('evidence-dialog');
+  const dialogTitle = document.getElementById('dialog-title');
+  const dialogGroups = document.getElementById('dialog-groups');
   const sheetBase = 'https://docs.google.com/spreadsheets/d/1BwHrlJhnYIRecen6l0tnWpZPVhIc7X_zW_3rRHFekZo/edit#gid=738173269&range=D';
   const statusText = {supported:'多研究支持',partial:'部分／條件／混合支持','not-supported':'已檢驗但未獲支持',open:'待直接驗證',context:'背景／理論來源'};
   const safe = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const citationFor = row => records.find(item => item.row === Number(row));
+  const evidenceDefinitions = {
+    's1-general': {title:'EF 與閱讀表現的關係', groups:[
+      {kind:'support',title:'支持或相關證據',note:'多種 EF 指標與閱讀理解有關，但相關證據本身不能推論訓練因果。',rows:[7,11,12,13]},
+      {kind:'counter',title:'不支持普遍缺損的證據',note:'部分特定樣本未呈現整體 EF 弱勢，或單一 EF 指標的獨特解釋量有限。',rows:[14,15,16]},
+      {kind:'pending',title:'待直接檢驗',text:'在閱讀理解困難學生中，同時配對通用 EF 與閱讀情境 EF，並控制解碼、流暢度、詞彙及口語理解後，檢驗額外解釋量。'}]},
+    's1-context': {title:'閱讀情境 EF 的增額解釋', groups:[
+      {kind:'support',title:'支持或部分支持',note:'有研究在特定作業、年級或語文任務下發現閱讀情境 EF 的獨特貢獻。',rows:[8,9,12,13,18]},
+      {kind:'counter',title:'限制普遍化的結果',note:'這些結果限制「所有理解弱勢都有同一 EF 缺損」的說法；部分並非通用與情境 EF 的直接配對檢定。',rows:[10,14,15,16]},
+      {kind:'pending',title:'待直接檢驗',text:'在同一個篇章理解弱勢樣本內，使用信度足夠且構念配對的作業，直接比較通用與閱讀情境 EF 的增額解釋力。'}]},
+    's1-phenotype': {title:'閱讀表現型與 EF 剖面的差異', groups:[
+      {kind:'support',title:'支持表現型異質性的結果',note:'不同閱讀困難類型呈現不同的 EF 表現，不宜把所有困難併成同一缺損。',rows:[10]},
+      {kind:'counter',title:'未支持整體 EF 弱勢的結果',note:'未發現普遍性差異不代表沒有特定歷程弱勢，也不代表效果為零。',rows:[14,15,16]},
+      {kind:'pending',title:'待直接檢驗',text:'擴大不同診斷與語言背景的文獻比較；研究招募先依閱讀表現型界定，再記錄診斷與共病。'}]},
+    's2-precedent': {title:'遊戲與 EF 閱讀活動的介入先例', groups:[
+      {kind:'support',title:'支持介入或閱讀結果改善的先例',note:'這些研究說明遊戲或 EF 閱讀活動已有可參照的做法，不代表已證明目標 EF 是作用機制。',rows:[21,22,23,26]},
+      {kind:'counter',title:'結果不一致或範圍受限',note:'部分研究沒有顯示一致的認知訓練增益；近遷移與獨立篇章結果也不相同。',rows:[24,25]},
+      {kind:'pending',title:'待直接檢驗',text:'確認遊戲規則對應的更新、抑制或彈性是否真的被動員，並以未練習的獨立 EF 作業檢核。'}]},
+    's2-gamification': {title:'遊戲化是否提升認知訓練成效', groups:[
+      {kind:'support',title:'有利結果',note:'個別介入研究報告遊戲、閱讀或訓練相關改善；結果不等同於遊戲化元素的獨立效果。',rows:[21,22,26]},
+      {kind:'counter',title:'未支持一致認知增益',note:'統合回顧未確認遊戲化能一致提升認知訓練成效；該回顧的研究數和任務範圍有限。',rows:[24,25]},
+      {kind:'pending',title:'待直接檢驗',text:'若要估計遊戲元素的效果，需在相同 EF 任務內容、劑量與回饋下比較遊戲版與非遊戲版。'}]},
+    's3-reading': {title:'介入對閱讀結果的影響', groups:[
+      {kind:'support',title:'支持部分閱讀結果改善',note:'研究族群、介入和閱讀結果不同，以下是先例集合，不是對 S-RCD 遊戲式 EF 介入的整體效果估計。',rows:[22,23,26,28,32,34,36]},
+      {kind:'counter',title:'混合或未獲支持的閱讀結果',note:'統合估計可能不精確，個別研究的標準化篇章理解也未達顯著。',rows:[30,37]},
+      {kind:'pending',title:'待直接檢驗',text:'在篇章理解困難學生中，使用未練習的新篇章作為預先指定的主要結果，並報告效果量與信賴區間。'}]},
+    's3-transfer': {title:'獨立 EF 近遷移與新篇章理解', groups:[
+      {kind:'support',title:'近遷移或相關歷程變化',note:'這些結果應與獨立標準化篇章理解分開判讀。',rows:[31]},
+      {kind:'counter',title:'獨立篇章結果未獲支持',note:'此處反映特定樣本、測量和估計精度下的結果，不能當成效果為零。',rows:[37]},
+      {kind:'pending',title:'尚待直接檢驗的新篇章遷移',text:'介入後以未練習 EF 作業測近遷移，之後再以未練習篇章測遠遷移，且不以遊戲分數替代。'}]},
+    's3-mediation': {title:'介入效果的中介證據', groups:[
+      {kind:'support',title:'相鄰的統計路徑證據',note:'觀察性群組研究中的統計中介可提示候選歷程，但不能取代隨機介入的時序中介檢驗。',rows:[17]},
+      {kind:'counter',title:'目前未見直接支持介入中介的證據',note:'下列介入研究未估計所需的 EF 間接效果；未估計不等於檢驗後否定。',rows:[]},
+      {kind:'pending',title:'待直接檢驗',note:'須把間接效果對應到指定組間比較。',rows:[22,28,29,35,36],text:'兩種候選設計仍保留：遊戲式 EF 介入相對主動閱讀支持，或閱讀情境 EF 遊戲相對通用 EF 遊戲。前者估計整體介入效果，後者估計情境化的額外效果。'}]}
+  };
+  const directions = {
+    1:[
+      {n:'1',kind:'研究假設',text:'不同閱讀表現型可能有不同 EF 剖面，閱讀困難不宜視為單一缺損。',rows:[10,14,16]},
+      {n:'1-1',kind:'研究假設',text:'字詞閱讀困難與特定閱讀理解困難可能呈現不同的 EF 弱勢組合。',rows:[10]},
+      {n:'2',kind:'研究假設',text:'閱讀情境 EF 可能在通用 EF 之外解釋篇章理解，但此增額效果可能受任務與年級影響。',rows:[12,13]},
+      {n:'2-1',kind:'候選假設 A',text:'在部分年級與文本中，閱讀情境的彈性或語文 EF 提供額外解釋。',rows:[8,9,13]},
+      {n:'2-2',kind:'候選假設 B',text:'增額解釋未必跨年級、族群或 EF 歷程一致；通用 EF 仍可能解釋共同變異。',rows:[12,14,15,16]},
+      {n:'',kind:'待補充文獻查詢',text:'補查 ADHD、DLD、自閉症及跨診斷的篇章理解表現型，並核對解碼、流暢度與口語理解控制方式。',rows:[]}
+    ],
+    2:[
+      {n:'1',kind:'研究假設',text:'依規則對應目標 EF 歷程的遊戲可形成有效練習，但遊戲內熟練不等同獨立 EF 改變。',rows:[21,22,24]},
+      {n:'1-1',kind:'候選假設 A',text:'遊戲化可能提高投入，並在目標 EF 作業上形成可測量的近遷移。',rows:[21,22,26]},
+      {n:'1-2',kind:'候選假設 B',text:'遊戲化的效益可能主要落在動機或遊戲任務熟練，未必一致遷移至獨立認知作業。',rows:[24,25]},
+      {n:'2',kind:'研究假設',text:'閱讀情境化遊戲可能使練習需求更貼近篇章理解歷程，是否優於通用 EF 遊戲仍待配對比較。',rows:[8,12,13,22,25]},
+      {n:'2-1',kind:'待補充文獻查詢',text:'確認商業遊戲與研究原型的規則、目標歷程、劑量及操弄檢核，避免將遊戲類型當成操弄證據。',rows:[23,26]},
+      {n:'',kind:'需審視研究方向',text:'若核心問題要估計遊戲元素本身的效果，另需同任務的遊戲版與非遊戲版比較。',rows:[24]}
+    ],
+    3:[
+      {n:'1',kind:'研究假設',text:'EF 與閱讀結合的介入可能改善部分閱讀結果，但效果會受介入成分、族群、對照和測量影響。',rows:[22,28,34,36]},
+      {n:'1-1',kind:'研究假設',text:'介入後的獨立 EF 改變可能先於新篇章理解結果；遊戲分數不能替代這兩項測量。',rows:[25,31,37]},
+      {n:'2',kind:'候選假設 A',text:'遊戲式 EF 介入相對主動閱讀支持，可能改善獨立 EF 與新篇章理解；中介估計對應整體介入效果。',rows:[28,29,33]},
+      {n:'2-1',kind:'候選假設 B',text:'閱讀情境 EF 遊戲相對通用 EF 遊戲，可能帶來額外篇章理解增益；中介估計對應情境化的額外效果。',rows:[12,13,22,25]},
+      {n:'2-2',kind:'待補充文獻查詢',text:'補查是否已有 S-RCD 介入以分時點獨立測量 EF、新篇章理解並估計組間間接效果。',rows:[17,28,29,35,36]},
+      {n:'',kind:'需審視研究方向',text:'主要對照與主要中介不先定案；待全文回顧、收案可行性和間接效果精度規劃後選擇。',rows:[17,30,37]}
+    ]
+  };
+  const miniCitation = item => `<a href="${safe(item.summaryUrl)}" target="_blank" rel="noopener noreferrer">${safe(item.apaCitation)}｜繁中摘要 ↗</a>`;
+  const doiLink = item => item.doi ? `<a class="doi-mini" href="${safe(item.doi)}" target="_blank" rel="noopener noreferrer">DOI／文章入口 ↗</a>` : '';
   document.querySelectorAll('[data-ref-rows]').forEach(box => {
     const rows = box.dataset.refRows.split(',').map(Number);
     box.innerHTML = rows.map(row => {
@@ -216,6 +335,41 @@ footer p{margin:5px 0}
       return `<span class="citation"><a class="citation-lead" href="${safe(item.summaryUrl)}" target="_blank" rel="noopener noreferrer">${safe(item.apaCitation)}｜繁中摘要 ↗</a><span class="citation-details">${safe(item.title)}${publication}</span><span class="citation-actions">${doi}</span></span>`;
     }).join('');
   });
+  document.querySelectorAll('[data-direction-study]').forEach(panel => {
+    const entries = directions[Number(panel.dataset.directionStudy)] || [];
+    panel.innerHTML = entries.map(entry => {
+      const refs = entry.rows.map(citationFor).filter(Boolean);
+      const referenceLinks = refs.map(item => `${miniCitation(item)}${doiLink(item)}`).join('');
+      return `<article class="direction-item"><div class="direction-head">${entry.n ? `<span class="hypothesis-number">${safe(entry.n)}</span>` : '<span class="hypothesis-number">•</span>'}<span class="direction-kind">${safe(entry.kind)}</span></div><p>${safe(entry.text)}</p>${referenceLinks ? `<div class="direction-citations">${referenceLinks}</div>` : ''}</article>`;
+    }).join('') + '<p class="direction-note">假設依目前已查核的代表文獻提出，引用只表示構想依據。競爭假設與未查足的關係均保留，供全文回顧後選擇。</p>';
+  });
+  function openEvidence(key) {
+    const definition = evidenceDefinitions[key];
+    if (!definition) return;
+    dialogTitle.textContent = definition.title;
+    dialogGroups.innerHTML = definition.groups.map(group => {
+      const entries = (group.rows || []).map(citationFor).filter(Boolean);
+      const note = group.note || '';
+      const text = group.text || '';
+      const recordsHtml = entries.map(item => `<article class="detail-record"><p>${safe(item.finding || '此列未提供詳細結果摘要。')}</p><div class="detail-links">${miniCitation(item)}${doiLink(item)}</div></article>`).join('');
+      const empty = !recordsHtml && !text ? '<p class="no-evidence">目前已查核資料中未見直接檢驗結果。</p>' : '';
+      return `<section class="dialog-group ${safe(group.kind)}"><h3>${safe(group.title)}</h3>${note ? `<p>${safe(note)}</p>` : ''}${text ? `<p>${safe(text)}</p>` : ''}${recordsHtml || empty}</section>`;
+    }).join('');
+    dialog.showModal();
+  }
+  document.querySelectorAll('[data-evidence-key]').forEach(card => {
+    card.setAttribute('role','group');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'evidence-open';
+    button.textContent = '查看支持與未支持證據';
+    button.setAttribute('aria-haspopup','dialog');
+    button.addEventListener('click', event => { event.stopPropagation(); openEvidence(card.dataset.evidenceKey); });
+    card.append(button);
+    card.addEventListener('click', event => { if (!event.target.closest('a,button')) openEvidence(card.dataset.evidenceKey); });
+  });
+  dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
   function render() {
     const query = q.value.trim().toLocaleLowerCase();
     const studyValue = study.value;
