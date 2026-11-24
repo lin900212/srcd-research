@@ -35,6 +35,8 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: public
+      - name: Wait for Pages artifact registration
+        run: sleep 10
       - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v4
